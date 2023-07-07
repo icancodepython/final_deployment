@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block metadescription %}
+We have a wide range of products waiting for you!!!
+{% endblock %}
+
+{% block title %}
+Search here
+{% endblock %}
+
+{% block content %}
+<div>
+    <p class="text-center my_search_text">You have searched for: <br>"{{query}}"</p>
+    <div class="container">
+          <div class="row mx_auto">
+                 {% for product in products %}
+                      <div class=" col-12 col-sm-12 col-md-12 col-lg-6 text-center">
+        <div style="min-width:18rem">
+            <img src="{{product.image.url}}" height="300px" width="200 px" alt="{{product.name}}">
+
+          <div class="card-body">
+             <h4 class="card_body">{{product.name}}</h4>
+             <h4 class="card_body">${{product.price}}</h4>
+          </div>
+          </div>
+     </div>
+    </div>
+</div>
+    {% empty %}
+         <div class="row mx-auto">
+            <p class ="text-center my_search_text">0 results found</p>
+         </div>
+
+                {% endfor %}
+
+{% endblock %}

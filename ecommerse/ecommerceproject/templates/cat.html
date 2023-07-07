@@ -1,0 +1,99 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+
+  {% block metadescription %}
+    {% if category %}
+      {{category.description|truncatewords:150}}
+    {% else %}
+      Hello Welcome's you!!!
+    {% endif %}
+  {% endblock %}
+
+  {% block title %}
+    {% if category %}
+      {{category.name}} Hello online store welcome's you!
+    {% else %}
+        Our collections now includes womens,mens and kids dresses
+  {% endif %}
+  {% endblock %}
+
+  {% block contents %}
+{% if category %}
+<div>
+  <div class="row my_row_class">
+    <div class="mx_auto">
+    <p>
+      <a href="{% url 'shop:allProdCat' %}">Our collections</a>
+    </p>
+      </div>
+  </div>
+</div>
+{% endif %}
+<div class="mx_auto">
+{% if category %}
+<img class="my_image" src ="{{category.image.url}}" height="400px" width="1250px" alt="{{category.name}}">
+</div><br>
+<div>
+  <h1 class="text-center my_title">{{category.name}}</h1>
+  <p class="text-justify">{{category.description}}</p>
+</div>
+{% else %}
+<div>
+   <img class="my_image my_image_padding" src="{% static 'img/banner.png' %}" alt ="Our Products" width="1150 px" height="300 px">
+</div><br>
+<div>
+  <h1 class="text-center my_title">Latest updates in the world of fashion</h1>
+  <p class="text-justify"> The changing of the seasons from winter to spring is a most exciting time—especially sartorially. In with lighter layers, dresses, and a sense of freedom; out with heavy outerwear, knits, and boots. When it comes to the spring 2023 trends, there’s a lot to look forward to. As noted by Vogue Runway’s trend report, the collections reflected many moods: from soft and undone (read draped jersey, distressed fabrics, and other touchable textures) to utilitarian preparedness (think well-pocketed garments) and a streamlined minimalism (see smart tailoring and even smarter button-up shirting). Our editors have already begun to gravitate to a handful of these, eager to transition to the spring wardrobe. </p>
+</div>
+{% endif %}
+
+<div class="container-fluid">
+  <div class="row mx_auto">
+    {% for product in products.object_list %}
+    <div class="my_bottom_margin col 9 col-sm-12 col-md-2 col-lg-2 offset-md-0">
+      <div class="card-text-center" style="min-width=18rem;">
+        <a href="{{product.get_url}}">
+                <img class="card-img my_image" src="{{product.image.url}}" alt="{{product.name}}"></a>
+      </div>
+        <div class="my_bottom_margin col 9 col-sm-12 col-md-2 col-lg-2 offset-md-0">
+      <div class="card-text-center" style="min-width=18rem;">
+        <a href="{{product.get_url}}">
+                <img class="card-img my_image" src="{{product.image.url}}" alt="{{product.name}}"></a>
+      </div>
+            <div class="my_bottom_margin col 9 col-sm-12 col-md-2 col-lg-2 offset-md-0">
+      <div class="card-text-center" style="min-width=18rem;">
+        <a href="{{product.get_url}}">
+                <img class="card-img my_image" src="{{product.image.url}}" alt="{{product.name}}"></a>
+      </div>
+
+      <div class="card-body">
+      <h4 class="card_body">{{product.name}}</h4>
+      <h4 class="card_body">${{product.price}}</h4>
+      </div>
+      </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+
+<!--  to display page no as 1,2...-->
+  <div class="mx_auto">
+    {% if products.paginator.num_pages > 1 %}
+    <hr>
+    <div class="text-center">
+      {% for pg in products.paginator.page_range %}
+      <a href="?page={{pg}}" class="btn btn-light btn-sm" {% if products.number == pg %} active {% endif %}">{{pg}}</a>
+      {% endfor %}
+
+    </div>
+     {% endif %}
+  </div>
+  <br>
+</div>
+{% endblock %}
+
+{% endblock %}
+
+
